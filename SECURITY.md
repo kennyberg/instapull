@@ -22,6 +22,8 @@ The `.gitignore` file is configured to ignore common secret files, but you shoul
 
 When AI analysis is enabled, InstaPull sends image data or sampled video frames to the selected AI provider. Captions may be included as context in the prompt. Do not use AI analysis on content you do not want sent to that provider. If no provider is selected, media is not sent to an AI provider.
 
+The `ollama` provider sends media to a local Ollama server, usually running on the same machine at `http://localhost:11434`. If you expose Ollama on a network, review that setup separately.
+
 ## Instagram Session Data
 
 InstaPull reads browser cookies to access saved posts for the account you are already logged into. A cookie is a small browser value that websites use to remember your login. Treat Instagram session cookies as private login material.

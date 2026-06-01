@@ -21,7 +21,7 @@ From this repository:
 pip install -e ".[gemini]"
 ```
 
-Use `.[all]` to install every currently supported optional provider. Right now, that means Gemini.
+Use `.[all]` to install every currently supported optional provider dependency. Right now, that means Gemini. Ollama support uses the core dependencies and expects Ollama itself to be installed separately on your machine.
 
 ## Setup
 
@@ -49,6 +49,12 @@ Fetch 10 saved posts using Gemini:
 instapull sync --provider gemini --limit 10
 ```
 
+Fetch 10 saved posts using a local Ollama vision model:
+
+```bash
+instapull sync --provider ollama --limit 10
+```
+
 If your computer says `instapull` is not found, use this equivalent command:
 
 ```bash
@@ -72,6 +78,7 @@ instapull sync --output ~/Desktop/instapull-data
 InstaPull currently includes:
 
 - `gemini`: Google Gemini Developer API, with optional Vertex AI mode.
+- `ollama`: local vision models through an Ollama server running on your machine.
 - `none`: no AI analysis.
 
 The provider code lives in `instapull/providers/`. Each provider implements the same small interface, so new providers can be added without changing the rest of the export flow.
@@ -81,24 +88,25 @@ For Gemini, there are two paths:
 - Gemini Developer API through Google AI Studio: uses `GEMINI_API_KEY`. Google documents this API-key path, but access can depend on your account, region, project permissions, and billing or quota setup.
 - Vertex AI: uses `GOOGLE_GENAI_USE_VERTEXAI=true`, `GOOGLE_CLOUD_PROJECT`, and Google Cloud credentials on the machine. This is more setup, but some users may prefer it if they already use Google Cloud.
 
-### Local Models
+### Ollama Local Models
 
-Local models are not bundled with InstaPull. Model files can be several gigabytes, and users have different hardware. The recommended open-source pattern is:
+Local model files are not bundled with InstaPull. They can be several gigabytes, and users have different hardware. Instead, InstaPull talks to Ollama, which runs the model locally on the user's machine.
 
-1. Keep the app provider-based.
-2. Document a local runtime option.
-3. Add an optional provider later that talks to a local runtime such as Ollama.
-
-Ollama is a practical future integration point because it runs on the user's machine and exposes a local API. Vision models in Ollama accept images alongside text, and the API accepts base64-encoded images. A future `ollama` provider could reuse the same sampled frames that Gemini uses today and send them to `http://localhost:11434`.
-
-Possible future setup:
+Basic setup:
 
 ```bash
 ollama pull qwen2.5vl
 instapull sync --provider ollama
 ```
 
-This is intentionally not enabled yet. The current repo keeps the architecture ready for it without forcing every user to install a large local model.
+By default, InstaPull expects:
+
+```bash
+OLLAMA_HOST=http://localhost:11434
+OLLAMA_MODEL=qwen2.5vl
+```
+
+You can change those in `.env`. The model must support vision input. A text-only local model will not be able to analyze images or video frames.
 
 ## Image And Video Analysis
 

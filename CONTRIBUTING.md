@@ -28,7 +28,7 @@ To add a provider:
 4. Add any optional dependency to `pyproject.toml`.
 5. Document the required environment variables in `.env.example` and `README.md`.
 
-Local providers should not bundle model files in this repository. Prefer an optional integration with a local runtime, such as Ollama, so users can choose which model to download on their own machine.
+Local providers should not bundle model files in this repository. Prefer integrations with local runtimes, such as Ollama, so users can choose which model to download on their own machine.
 
 ## Checks
 

@@ -6,3 +6,4 @@
 - Export Instagram saved posts to JSON.
 - Analyze images with supported AI vision providers.
 - Analyze videos by sampling frames across the video duration.
+- Add Gemini and Ollama provider support.

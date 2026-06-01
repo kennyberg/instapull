@@ -1,8 +1,10 @@
 from .base import VisionProvider
 from .gemini import GeminiProvider
+from .ollama import OllamaProvider
 
 _REGISTRY = {
     "gemini": GeminiProvider,
+    "ollama": OllamaProvider,
 }
 
 PROVIDER_NAMES = sorted(_REGISTRY.keys())
